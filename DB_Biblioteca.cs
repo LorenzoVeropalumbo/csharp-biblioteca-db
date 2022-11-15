@@ -126,8 +126,9 @@ static class DB_Biblioteca
             insertCommand.Parameters.Add(new SqlParameter("@user_id", UserId));
             int affectedRows = insertCommand.ExecuteNonQuery();
 
-            string insertQueryUpdate = " UPDATE " + insertResponse + " SET Stato = False WHERE id = " + ObjId;
+            string insertQueryUpdate = " UPDATE " + insertResponse + " SET Stato = @value WHERE id = " + ObjId;
             insertCommand = new SqlCommand(insertQueryUpdate, connessione);
+            insertCommand.Parameters.Add(new SqlParameter("@value", false));
             affectedRows = insertCommand.ExecuteNonQuery();
         } 
         connessione.Close();
