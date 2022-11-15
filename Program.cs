@@ -25,7 +25,7 @@ while (loop)
             DB_Biblioteca.SearchTable(insertResponse, query);
             break;
         case 3:
-            
+            Prestito();
             break;
         default:
 			Console.Clear();
@@ -90,4 +90,5 @@ void Prestito()
         Console.WriteLine("Libro non disponibile");
         return;
     }
+    DB_Biblioteca.GetPrestito(insertResponse, id, 1);
 }
