@@ -85,7 +85,7 @@ static class DB_Biblioteca
     public static void VediTuttiIDati()
     {
         // Query
-        string query = "SELECT * FROM Libri,Dvd;";
+        string query = "SELECT * FROM Libri;";
         SqlCommand cmd = new SqlCommand(query, connessione);
 
         SqlDataReader reader = cmd.ExecuteReader();
@@ -131,6 +131,30 @@ static class DB_Biblioteca
             insertCommand.Parameters.Add(new SqlParameter("@value", false));
             affectedRows = insertCommand.ExecuteNonQuery();
         } 
+        connessione.Close();
+    }
+
+    public static int GetUser(string email)
+    {
+        DB_Biblioteca.Connect();
+        string query = "SELECT * FROM User WHERE Email = " + email;
+        SqlCommand cmd = new SqlCommand(query, connessione);
+        SqlDataReader reader = cmd.ExecuteReader();
+        int id = 0;
+
+        while (reader.Read())
+        {
+            id = reader.GetInt32(0);
+        }
+
+        if (id == 0)
+        {
+            return -1;
+        }
+        else
+        {
+            return id;
+        }
         connessione.Close();
     }
 }

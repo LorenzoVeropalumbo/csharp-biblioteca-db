@@ -90,5 +90,13 @@ void Prestito()
         Console.WriteLine("Libro non disponibile");
         return;
     }
-    DB_Biblioteca.GetPrestito(insertResponse, id, 1);
+    Console.WriteLine("Inserici l'email");
+    string UserEmail = Console.ReadLine();
+    int User = DB_Biblioteca.GetUser(UserEmail);
+    if(User == -1)
+    {
+        Console.WriteLine("Utente non disponibile registrati");
+        return;
+    }
+    DB_Biblioteca.GetPrestito(insertResponse, id, User);
 }
