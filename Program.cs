@@ -18,7 +18,14 @@ while (loop)
             InsertLoop();       
             break;
         case 2:
-            DB_Biblioteca.AddToDatabaseLibro("Libri", "Spiderman");
+            Console.WriteLine("Cosa vuoi cercare: \nLibri o Dvd");
+            string insertResponse = Console.ReadLine();
+            Console.WriteLine("Inserici il codice identificatico o il titolo");
+            string query = Console.ReadLine();
+            DB_Biblioteca.SearchTable(insertResponse, query);
+            break;
+        case 3:
+            
             break;
         default:
 			Console.Clear();
@@ -68,5 +75,19 @@ void AddToDb(int response)
     else
     {
         throw new Exception("scelta non valida ripetere");
+    }
+}
+
+void Prestito()
+{
+    Console.WriteLine("Cosa vuoi cercare: \nLibri o Dvd");
+    string insertResponse = Console.ReadLine();
+    Console.WriteLine("Inserici il codice identificatico o il titolo");
+    string query = Console.ReadLine();
+    int id = DB_Biblioteca.SearchTable(insertResponse, query);
+    if(id == -1)
+    {
+        Console.WriteLine("Libro non disponibile");
+        return;
     }
 }

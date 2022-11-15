@@ -45,9 +45,35 @@ static class DB_Biblioteca
         int affectedRows = insertCommand.ExecuteNonQuery();
     }
 
-    public static void AddToDatabaseLibro(string table, string searchValue)
+    public static int SearchTable(string table, string searchValue)
     {
         string query = "SELECT * FROM " + table + " WHERE Titolo = '" + searchValue + "' OR Codice_identificativo = '" + searchValue + "'";
+        SqlCommand cmd = new SqlCommand(query, connessione);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            string name = reader.GetString(1);
+            Int16 val = reader.GetInt16(2);
+            bool disp = reader.GetBoolean(3);
+            Console.WriteLine(name, val, disp);
+        }
+
+        if (reader.GetBoolean(3))
+        {
+            return reader.GetInt32(0);
+        }
+        else
+        {
+            return -1;
+        }    
+    }
+
+    public static void VediTuttiIDati()
+    {
+        // Query
+        string query = "SELECT * FROM Libri,Dvd;";
         SqlCommand cmd = new SqlCommand(query, connessione);
 
         SqlDataReader reader = cmd.ExecuteReader();
@@ -59,10 +85,9 @@ static class DB_Biblioteca
         }
     }
 
-    public static void VediTuttiIDati()
+    public static void GetPrestito(string insertResponse, int ObjId)
     {
-        // Query
-        string query = "SELECT * FROM Libri,Dvd;";
+        string query = "SELECT * FROM " + insertResponse + "Where id = " + ObjId;
         SqlCommand cmd = new SqlCommand(query, connessione);
 
         SqlDataReader reader = cmd.ExecuteReader();
